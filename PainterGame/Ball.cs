@@ -6,9 +6,10 @@ namespace PainterGame
 {
     internal class Ball
     {
-        private Vector2 position, origin;
+        private Vector2 position, origin, velocity;
         private Texture2D colorRed, colorGreen, colorBlue;
         private Color color;
+        private bool shooting;
 
         public Color Color
         {
@@ -31,16 +32,32 @@ namespace PainterGame
         {
             position = new Vector2(65, 390);
             Color = Color.Blue;
+            shooting = false;
+            velocity = Vector2.Zero;
         }
 
         public void HandleInput(InputHelper inputHelper)
         {
+            if (inputHelper.MouseLeftButtonPressed() && !shooting)
+            {
+                shooting = true;
+                velocity = (inputHelper.MousePosition - Painter.GameWorld.Cannon.Position) * 1.2f;
+            }
         }
 
         public void Update(GameTime gametime)
         {
-            Color = Painter.GameWorld.Cannon.Color;
-            position = Painter.GameWorld.Cannon.BallPosition;
+            if (shooting)
+            {
+                float dt = (float)gametime.ElapsedGameTime.TotalSeconds;
+                position += velocity * dt;
+                velocity.Y += 400.0f * dt;
+            }
+            else
+            {
+                Color = Painter.GameWorld.Cannon.Color;
+                position = Painter.GameWorld.Cannon.BallPosition;
+            }
         }
 
         public void Draw(GameTime gametime, SpriteBatch spriteBatch)
