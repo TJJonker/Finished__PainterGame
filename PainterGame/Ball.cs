@@ -58,6 +58,8 @@ namespace PainterGame
                 Color = Painter.GameWorld.Cannon.Color;
                 position = Painter.GameWorld.Cannon.BallPosition;
             }
+
+            if (Painter.GameWorld.IsOutsideWorld(Position)) Reset();
         }
 
         public void Draw(GameTime gametime, SpriteBatch spriteBatch)

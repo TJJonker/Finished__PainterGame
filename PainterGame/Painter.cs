@@ -9,6 +9,7 @@ namespace PainterGame
         private SpriteBatch spriteBatch;
         private InputHelper inputHelper;
         static GameWorld gameWorld;
+        public static Vector2 ScreenSize { get; private set; }
 
         public static GameWorld GameWorld { get { return gameWorld; } }
 
@@ -24,6 +25,7 @@ namespace PainterGame
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameWorld = new GameWorld(Content);
+            ScreenSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
         }
 
         protected override void Update(GameTime gameTime)
