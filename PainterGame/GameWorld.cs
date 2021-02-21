@@ -9,6 +9,7 @@ namespace PainterGame
         private Cannon cannon;
         private Texture2D background;
         private Ball ball;
+        private PaintCan can1, can2, can3;
 
         public Cannon Cannon { get { return cannon; } }
 
@@ -17,6 +18,9 @@ namespace PainterGame
             background = Content.Load<Texture2D>("spr_background");
             cannon = new Cannon(Content);
             ball = new Ball(Content);
+            can1 = new PaintCan(Content, 480.0f, Color.Red);
+            can2 = new PaintCan(Content, 610.0f, Color.Green);
+            can3 = new PaintCan(Content, 740.0f, Color.Blue);
         }
 
         public void HandleInput(InputHelper inputHelper)
@@ -28,6 +32,9 @@ namespace PainterGame
         public void Update(GameTime gameTime)
         {
             ball.Update(gameTime);
+            can1.Update(gameTime);
+            can2.Update(gameTime);
+            can3.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -36,6 +43,9 @@ namespace PainterGame
             spriteBatch.Draw(background, Vector2.Zero, Color.White);
             ball.Draw(gameTime, spriteBatch);
             cannon.Draw(gameTime, spriteBatch);
+            can1.Draw(gameTime, spriteBatch);
+            can2.Draw(gameTime, spriteBatch);
+            can3.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
 
