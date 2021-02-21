@@ -6,9 +6,10 @@ namespace PainterGame
 {
     internal class PaintCan
     {
-        Texture2D colorRed, colorGreen, colorBlue;
-        Vector2 position, origin, velocity;
-        Color color, targetColor;
+        private Texture2D colorRed, colorGreen, colorBlue;
+        private Vector2 position, origin, velocity;
+        private Color color, targetColor;
+        private float minSpeed;
 
         public Color Color
         {
@@ -25,13 +26,25 @@ namespace PainterGame
             colorBlue = Content.Load<Texture2D>("spr_can_blue");
             origin = new Vector2(colorRed.Width, colorRed.Height) / 2;
             targetColor = target;
-            position = new Vector2(positionOffset, 100);
+            position = new Vector2(positionOffset, -origin.Y);
+            minSpeed = 30f;
             Reset();
         }
 
         public void Update(GameTime gameTime)
         {
-            
+            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            minSpeed += 0.01f * dt;
+
+            if (velocity != Vector2.Zero)
+            {
+                position += velocity * dt;
+                if (Painter.GameWorld.IsOutsideWorld(Position - origin)) Reset();
+            }
+            else
+            {
+                velocity = new Vector2(0, minSpeed);
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -47,6 +60,7 @@ namespace PainterGame
         {
             Color = Color.Blue;
             velocity = Vector2.Zero;
+            position.Y = -origin.Y;
         }
     }
 }
