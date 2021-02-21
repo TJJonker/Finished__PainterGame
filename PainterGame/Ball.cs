@@ -10,6 +10,14 @@ namespace PainterGame
         private Texture2D colorRed, colorGreen, colorBlue;
         private Color color;
 
+        public Color Color
+        {
+            get { return color; }
+            set { if (value == Color.Red || value == Color.Green || value == Color.Blue) color = value; }
+        }
+
+        public Vector2 Position { get { return position; } }
+
         public Ball(ContentManager Content)
         {
             colorRed = Content.Load<Texture2D>("spr_ball_red");
@@ -22,7 +30,7 @@ namespace PainterGame
         public void Reset()
         {
             position = new Vector2(65, 390);
-            color = Color.Blue;
+            Color = Color.Blue;
         }
 
         public void HandleInput(InputHelper inputHelper)
@@ -31,13 +39,15 @@ namespace PainterGame
 
         public void Update(GameTime gametime)
         {
+            Color = Painter.GameWorld.Cannon.Color;
+            position = Painter.GameWorld.Cannon.BallPosition;
         }
 
         public void Draw(GameTime gametime, SpriteBatch spriteBatch)
         {
             Texture2D currentSprite;
-            if (color == Color.Red) currentSprite = colorRed;
-            else if (color == Color.Green) currentSprite = colorGreen;
+            if (Color == Color.Red) currentSprite = colorRed;
+            else if (Color == Color.Green) currentSprite = colorGreen;
             else currentSprite = colorBlue;
             spriteBatch.Draw(currentSprite, position, null, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
         }

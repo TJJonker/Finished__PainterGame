@@ -27,7 +27,7 @@ namespace PainterGame
 
         public void Update(GameTime gameTime)
         {
-
+            ball.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
