@@ -3,13 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace PainterGame
 {
-    public class Painter : Game
+    internal class Painter : Game
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private InputHelper inputHelper;
-        private GameWorld gameWorld;
+        static GameWorld gameWorld;
 
+        public static GameWorld GameWorld { get { return gameWorld; } }
 
         public Painter()
         {

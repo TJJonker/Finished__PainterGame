@@ -44,11 +44,6 @@ namespace PainterGame
         public void Draw(GameTime gametime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(cannonBarrel, barrelPosition, null, Color.White, angle, barrelOrigin, 1.0f, SpriteEffects.None, 0);
-            Texture2D currentSprite;
-            if (currentColor == Color.Red) currentSprite = colorRed;
-            else if (currentColor == Color.Green) currentSprite = colorGreen;
-            else currentSprite = colorBlue;
-            spriteBatch.Draw(currentSprite, barrelPosition, null, Color.White, 0f, colorOrigin, 1.0f, SpriteEffects.None, 0);
         }
 
         public void HandleInput(InputHelper inputHelper)
