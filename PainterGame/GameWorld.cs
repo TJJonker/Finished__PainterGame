@@ -12,6 +12,7 @@ namespace PainterGame
         private PaintCan can1, can2, can3;
 
         public Cannon Cannon { get { return cannon; } }
+        public Ball Ball { get { return ball; } }
 
         public GameWorld(ContentManager Content)
         {

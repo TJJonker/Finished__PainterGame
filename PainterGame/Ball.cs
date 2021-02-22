@@ -19,6 +19,16 @@ namespace PainterGame
 
         public Vector2 Position { get { return position; } }
 
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                Rectangle spriteBounds = colorRed.Bounds;
+                spriteBounds.Offset(position - origin);
+                return spriteBounds;
+            }
+        }
+
         public Ball(ContentManager Content)
         {
             colorRed = Content.Load<Texture2D>("spr_ball_red");
