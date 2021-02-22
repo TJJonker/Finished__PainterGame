@@ -43,7 +43,7 @@ namespace PainterGame
             }
             else
             {
-                velocity = new Vector2(0, minSpeed);
+                velocity = CalculateRandomVelocity();
             }
         }
 
@@ -61,6 +61,11 @@ namespace PainterGame
             Color = Color.Blue;
             velocity = Vector2.Zero;
             position.Y = -origin.Y;
+        }
+        
+        private Vector2 CalculateRandomVelocity()
+        {
+            return new Vector2(0.0f, (float)Painter.Random.NextDouble() * 30 + minSpeed);
         }
     }
 }

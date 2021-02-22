@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace PainterGame
 {
@@ -13,12 +14,15 @@ namespace PainterGame
 
         public static GameWorld GameWorld { get { return gameWorld; } }
 
+        public static Random Random { get; private set; }
+
         public Painter()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             inputHelper = new InputHelper();
+            Random = new Random();
         }
 
         protected override void LoadContent()
