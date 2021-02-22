@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace PainterGame
 {
     internal class GameWorld
     {
         private Cannon cannon;
-        private Texture2D background, life;
+        private Texture2D background, life, gameover;
         private Ball ball;
         private PaintCan can1, can2, can3;
         private int lives;
@@ -15,10 +16,16 @@ namespace PainterGame
         public Cannon Cannon { get { return cannon; } }
         public Ball Ball { get { return ball; } }
 
+        public bool IsGameOver
+        {
+            get { return lives <= 0; }
+        }
+
         public GameWorld(ContentManager Content)
         {
             background = Content.Load<Texture2D>("spr_background");
             life = Content.Load<Texture2D>("spr_lives");
+            gameover = Content.Load<Texture2D>("spr_gameover");
             cannon = new Cannon(Content);
             ball = new Ball(Content);
             can1 = new PaintCan(Content, 480.0f, Color.Red);
@@ -29,12 +36,17 @@ namespace PainterGame
 
         public void HandleInput(InputHelper inputHelper)
         {
-            cannon.HandleInput(inputHelper);
-            ball.HandleInput(inputHelper);
+            if (!IsGameOver)
+            {
+                cannon.HandleInput(inputHelper);
+                ball.HandleInput(inputHelper);
+            }
+            else if (inputHelper.KeyPressed(Keys.Space)) Reset();
         }
 
         public void Update(GameTime gameTime)
         {
+            if (IsGameOver) return;
             ball.Update(gameTime);
             can1.Update(gameTime);
             can2.Update(gameTime);
@@ -54,6 +66,12 @@ namespace PainterGame
             {
                 spriteBatch.Draw(life, new Vector2(i * life.Width + 15, 20), Color.White);
             }
+            if (IsGameOver)
+            {
+                spriteBatch.Draw(gameover,
+                    new Vector2(Painter.ScreenSize.X - gameover.Width, Painter.ScreenSize.Y - gameover.Height) / 2,
+                    Color.White);
+            }
             spriteBatch.End();
         }
 
@@ -66,6 +84,20 @@ namespace PainterGame
         public void LoseLife()
         {
             lives--;
+        }
+
+        private void Reset()
+        {
+            lives = 5;
+            Cannon.Reset();
+            ball.Reset();
+            can1.Reset();
+            can1.ResetMinSpeed();
+            can2.Reset();
+            can2.ResetMinSpeed();
+            can3.Reset();
+            can3.ResetMinSpeed();
+
         }
     }
 }

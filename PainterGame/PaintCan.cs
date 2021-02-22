@@ -96,5 +96,10 @@ namespace PainterGame
             else if (randomVal == 1) return Color.Green;
             else return Color.Blue;
         }
+
+        public void ResetMinSpeed()
+        {
+            minSpeed = 30f;
+        }
     }
 }
