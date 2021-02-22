@@ -49,9 +49,12 @@ namespace PainterGame
             if (velocity != Vector2.Zero)
             {
                 position += velocity * dt;
-                if (Painter.GameWorld.IsOutsideWorld(Position - origin)) Reset();
+                if (Painter.GameWorld.IsOutsideWorld(Position - origin))
+                {
+                    if (Color != targetColor) Painter.GameWorld.LoseLife();
+                    Reset();
+                }
 
-                // Collision
                 if (BoundingBox.Intersects(Painter.GameWorld.Ball.BoundingBox))
                 {
                     Color = Painter.GameWorld.Ball.Color;

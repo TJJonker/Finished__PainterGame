@@ -7,9 +7,10 @@ namespace PainterGame
     internal class GameWorld
     {
         private Cannon cannon;
-        private Texture2D background;
+        private Texture2D background, life;
         private Ball ball;
         private PaintCan can1, can2, can3;
+        private int lives;
 
         public Cannon Cannon { get { return cannon; } }
         public Ball Ball { get { return ball; } }
@@ -17,11 +18,13 @@ namespace PainterGame
         public GameWorld(ContentManager Content)
         {
             background = Content.Load<Texture2D>("spr_background");
+            life = Content.Load<Texture2D>("spr_lives");
             cannon = new Cannon(Content);
             ball = new Ball(Content);
             can1 = new PaintCan(Content, 480.0f, Color.Red);
             can2 = new PaintCan(Content, 610.0f, Color.Green);
             can3 = new PaintCan(Content, 740.0f, Color.Blue);
+            lives = 5;
         }
 
         public void HandleInput(InputHelper inputHelper)
@@ -47,6 +50,10 @@ namespace PainterGame
             can1.Draw(gameTime, spriteBatch);
             can2.Draw(gameTime, spriteBatch);
             can3.Draw(gameTime, spriteBatch);
+            for (int i = 0; i < lives; i++)
+            {
+                spriteBatch.Draw(life, new Vector2(i * life.Width + 15, 20), Color.White);
+            }
             spriteBatch.End();
         }
 
@@ -54,6 +61,11 @@ namespace PainterGame
         {
             return position.X < 0 || position.X > Painter.ScreenSize.X
                 || position.Y > Painter.ScreenSize.Y;
+        }
+
+        public void LoseLife()
+        {
+            lives--;
         }
     }
 }
