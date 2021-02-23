@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SourceFile>E:/Learning C# Book/PainterGame/PainterGame/Content/../../../csharpgames-master/csharpgames-master/Code and Assets/11_FinishingGame/PainterFinal/Content/snd_music.wma</SourceFile>
+  <SourceTime>2021-02-17T18:27:43.9040514+01:00</SourceTime>
+  <DestFile>E:/Learning C# Book/PainterGame/PainterGame/Content/bin/DesktopGL/Content/../../../csharpgames-master/csharpgames-master/Code and Assets/11_FinishingGame/PainterFinal/Content/snd_music.xnb</DestFile>
+  <DestTime>2021-02-23T20:00:37.9241452+01:00</DestTime>
+  <Importer>WmaImporter</Importer>
+  <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2020-08-10T16:17:54+02:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>E:/Learning C# Book/PainterGame/PainterGame/Content/bin/DesktopGL/Content/../../../csharpgames-master/csharpgames-master/Code and Assets/11_FinishingGame/PainterFinal/Content/snd_music.ogg</string>
+  </BuildOutput>
+</PipelineBuildEvent>

@@ -175,3 +175,21 @@
 /processorParam:TextureFormat=Color
 /build:spr_gameover.jpg
 
+#begin snd_collect_points.wma
+/importer:WmaImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:snd_collect_points.wma
+
+#begin ../../../csharpgames-master/csharpgames-master/Code and Assets/11_FinishingGame/PainterFinal/Content/snd_music.wma
+/importer:WmaImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:../../../csharpgames-master/csharpgames-master/Code and Assets/11_FinishingGame/PainterFinal/Content/snd_music.wma
+
+#begin snd_shoot_paint.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:snd_shoot_paint.wav
+

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace PainterGame
 {
@@ -7,9 +9,11 @@ namespace PainterGame
     {
         private Color targetColor;
         private float minSpeed;
+        SoundEffect soundPoint;
 
         public PaintCan(ContentManager Content, float positionOffset, Color target) : base(Content, "spr_can_red", "spr_can_green", "spr_can_blue")
         {
+            soundPoint = Content.Load<SoundEffect>("snd_collect_points");
             targetColor = target;
             position = new Vector2(positionOffset, -origin.Y);
             minSpeed = 30f;
@@ -17,6 +21,8 @@ namespace PainterGame
 
         public override void Update(GameTime gameTime)
         {
+            rotation = (float)Math.Sin(Position.Y / 50.0f) * 0.05f;
+
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
             minSpeed += 0.01f * dt;
 
@@ -29,6 +35,7 @@ namespace PainterGame
                 {
                     // If wrong color, lose a life
                     if (Color != targetColor) Painter.GameWorld.LoseLife();
+                    else { soundPoint.Play(); }
                     Reset();
                 }
 

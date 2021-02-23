@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 
 namespace PainterGame
@@ -30,6 +31,8 @@ namespace PainterGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameWorld = new GameWorld(Content);
             ScreenSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(Content.Load<Song>("snd_music"));
         }
 
         protected override void Update(GameTime gameTime)
