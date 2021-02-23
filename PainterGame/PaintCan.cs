@@ -1,48 +1,45 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace PainterGame
 {
-    internal class PaintCan
+    internal class PaintCan : ThreeColorGameObject
     {
-        private Texture2D colorRed, colorGreen, colorBlue;
-        private Vector2 position, origin, velocity;
-        private Color color, targetColor;
+        private Color targetColor;
         private float minSpeed;
 
-        public PaintCan(ContentManager Content, float positionOffset, Color target)
+        public PaintCan(ContentManager Content, float positionOffset, Color target) : base(Content, "spr_can_red", "spr_can_green", "spr_can_blue")
         {
-            colorRed = Content.Load<Texture2D>("spr_can_red");
-            colorGreen = Content.Load<Texture2D>("spr_can_green");
-            colorBlue = Content.Load<Texture2D>("spr_can_blue");
-            origin = new Vector2(colorRed.Width, colorRed.Height) / 2;
             targetColor = target;
             position = new Vector2(positionOffset, -origin.Y);
             minSpeed = 30f;
-            Reset();
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
             minSpeed += 0.01f * dt;
 
+            base.Update(gameTime);
+
             if (velocity != Vector2.Zero)
             {
-                position += velocity * dt;
+                // Checks if outside the world
                 if (Painter.GameWorld.IsOutsideWorld(Position - origin))
                 {
+                    // If wrong color, lose a life
                     if (Color != targetColor) Painter.GameWorld.LoseLife();
                     Reset();
                 }
 
+                // Check for collision with the ball
                 if (BoundingBox.Intersects(Painter.GameWorld.Ball.BoundingBox))
                 {
                     Color = Painter.GameWorld.Ball.Color;
                     Painter.GameWorld.Ball.Reset();
                 }
             }
+            // Respawn at certain probability
             else if (Painter.Random.NextDouble() < 0.01f)
             {
                 velocity = CalculateRandomVelocity();
@@ -50,18 +47,9 @@ namespace PainterGame
             }
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Reset()
         {
-            Texture2D currentSprite;
-            if (Color == Color.Red) currentSprite = colorRed;
-            else if (Color == Color.Green) currentSprite = colorGreen;
-            else currentSprite = colorBlue;
-            spriteBatch.Draw(currentSprite, position, null, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
-        }
-
-        public void Reset()
-        {
-            Color = Color.Blue;
+            base.Reset();
             velocity = Vector2.Zero;
             position.Y = -origin.Y;
         }

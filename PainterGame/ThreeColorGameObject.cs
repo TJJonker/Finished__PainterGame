@@ -6,15 +6,15 @@ namespace PainterGame
 {
     internal class ThreeColorGameObject
     {
-        private Texture2D colorRed, colorGreen, colorBlue;
+        protected Texture2D colorRed, colorGreen, colorBlue;
         private Color color;
-        private Vector2 position, origin, velocity;
-        private float rotation;
+        protected Vector2 position, origin, velocity;
+        protected float rotation;
 
         public Color Color
         {
             get { return color; }
-            set { if (value == Color.Red || value == Color.Green || value == Color.Blue) color = value; }
+            protected set { if (value == Color.Red || value == Color.Green || value == Color.Blue) color = value; }
         }
 
         public Vector2 Position { get { return position; } }
@@ -29,7 +29,7 @@ namespace PainterGame
             }
         }
 
-        public ThreeColorGameObject(ContentManager Content, string redSprite, string greenSprite, string blueSprite)
+        protected ThreeColorGameObject(ContentManager Content, string redSprite, string greenSprite, string blueSprite)
         {
             colorRed = Content.Load<Texture2D>(redSprite);
             colorGreen = Content.Load<Texture2D>(greenSprite);
@@ -44,21 +44,21 @@ namespace PainterGame
             Reset();
         }
 
-        public void Reset()
+        public virtual void Reset()
         {
             Color = Color.Blue;
         }
 
-        public void HandleInput(InputHelper inputHelper)
+        public virtual void HandleInput(InputHelper inputHelper)
         {
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             Texture2D currentSprite;
             if (Color == Color.Red) currentSprite = colorRed;

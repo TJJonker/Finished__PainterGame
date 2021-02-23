@@ -1,52 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace PainterGame
 {
-    internal class Ball
+    internal class Ball : ThreeColorGameObject
     {
-        private Vector2 position, origin, velocity;
-        private Texture2D colorRed, colorGreen, colorBlue;
-        private Color color;
         private bool shooting;
 
-        public Color Color
+        public Ball(ContentManager Content) : base(Content, "spr_ball_red", "spr_ball_green", "spr_ball_blue")
         {
-            get { return color; }
-            set { if (value == Color.Red || value == Color.Green || value == Color.Blue) color = value; }
         }
 
-        public Vector2 Position { get { return position; } }
-
-        public Rectangle BoundingBox
+        public override void Reset()
         {
-            get
-            {
-                Rectangle spriteBounds = colorRed.Bounds;
-                spriteBounds.Offset(position - origin);
-                return spriteBounds;
-            }
-        }
-
-        public Ball(ContentManager Content)
-        {
-            colorRed = Content.Load<Texture2D>("spr_ball_red");
-            colorGreen = Content.Load<Texture2D>("spr_ball_green");
-            colorBlue = Content.Load<Texture2D>("spr_ball_blue");
-            origin = new Vector2(colorRed.Width / 2, colorRed.Height / 2);
-            Reset();
-        }
-
-        public void Reset()
-        {
+            base.Reset();
             position = new Vector2(65, 390);
-            Color = Color.Blue;
             shooting = false;
             velocity = Vector2.Zero;
         }
 
-        public void HandleInput(InputHelper inputHelper)
+        public override void HandleInput(InputHelper inputHelper)
         {
             if (inputHelper.MouseLeftButtonPressed() && !shooting)
             {
@@ -55,13 +28,11 @@ namespace PainterGame
             }
         }
 
-        public void Update(GameTime gametime)
+        public override void Update(GameTime gametime)
         {
             if (shooting)
             {
-                float dt = (float)gametime.ElapsedGameTime.TotalSeconds;
-                position += velocity * dt;
-                velocity.Y += 400.0f * dt;
+                velocity.Y += 400.0f * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
             else
             {
@@ -70,15 +41,7 @@ namespace PainterGame
             }
 
             if (Painter.GameWorld.IsOutsideWorld(Position)) Reset();
-        }
-
-        public void Draw(GameTime gametime, SpriteBatch spriteBatch)
-        {
-            Texture2D currentSprite;
-            if (Color == Color.Red) currentSprite = colorRed;
-            else if (Color == Color.Green) currentSprite = colorGreen;
-            else currentSprite = colorBlue;
-            spriteBatch.Draw(currentSprite, position, null, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+            base.Update(gametime);
         }
     }
 }
