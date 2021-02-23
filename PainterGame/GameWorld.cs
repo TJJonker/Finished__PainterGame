@@ -8,13 +8,16 @@ namespace PainterGame
     internal class GameWorld
     {
         private Cannon cannon;
-        private Texture2D background, life, gameover;
+        private Texture2D background, life, gameover, scoreBar;
         private Ball ball;
         private PaintCan can1, can2, can3;
         private int lives;
+        private SpriteFont gameFont;
 
         public Cannon Cannon { get { return cannon; } }
         public Ball Ball { get { return ball; } }
+
+        public int Score { get; set; }
 
         public bool IsGameOver
         {
@@ -26,12 +29,15 @@ namespace PainterGame
             background = Content.Load<Texture2D>("spr_background");
             life = Content.Load<Texture2D>("spr_lives");
             gameover = Content.Load<Texture2D>("spr_gameover");
+            scoreBar = Content.Load<Texture2D>("spr_scorebar");
+            gameFont = Content.Load<SpriteFont>("PainterFont");
             cannon = new Cannon(Content);
             ball = new Ball(Content);
             can1 = new PaintCan(Content, 480.0f, Color.Red);
             can2 = new PaintCan(Content, 610.0f, Color.Green);
             can3 = new PaintCan(Content, 740.0f, Color.Blue);
             lives = 5;
+            Score = 0;
         }
 
         public void HandleInput(InputHelper inputHelper)
@@ -64,8 +70,10 @@ namespace PainterGame
             can3.Draw(gameTime, spriteBatch);
             for (int i = 0; i < lives; i++)
             {
-                spriteBatch.Draw(life, new Vector2(i * life.Width + 15, 20), Color.White);
+                spriteBatch.Draw(life, new Vector2(i * life.Width + 15, 60), Color.White);
             }
+            spriteBatch.Draw(scoreBar, new Vector2(10, 10), Color.White);
+            spriteBatch.DrawString(gameFont, "Score: " + Score, new Vector2(20, 18), Color.White);
             if (IsGameOver)
             {
                 spriteBatch.Draw(gameover,
@@ -97,7 +105,7 @@ namespace PainterGame
             can2.ResetMinSpeed();
             can3.Reset();
             can3.ResetMinSpeed();
-
+            Score = 0;
         }
     }
 }

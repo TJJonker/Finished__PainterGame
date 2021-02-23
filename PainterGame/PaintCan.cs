@@ -35,7 +35,10 @@ namespace PainterGame
                 {
                     // If wrong color, lose a life
                     if (Color != targetColor) Painter.GameWorld.LoseLife();
-                    else { soundPoint.Play(); }
+                    else {
+                        soundPoint.Play();
+                        Painter.GameWorld.Score += 10;
+                    }
                     Reset();
                 }
 
