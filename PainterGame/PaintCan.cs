@@ -11,24 +11,6 @@ namespace PainterGame
         private Color color, targetColor;
         private float minSpeed;
 
-        public Color Color
-        {
-            get { return color; }
-            set { if (value == Color.Red || value == Color.Green || value == Color.Blue) color = value; }
-        }
-
-        public Vector2 Position { get { return position; } }
-
-        public Rectangle BoundingBox
-        {
-            get
-            {
-                Rectangle spriteBounds = colorRed.Bounds;
-                spriteBounds.Offset(position - origin);
-                return spriteBounds;
-            }
-        }
-
         public PaintCan(ContentManager Content, float positionOffset, Color target)
         {
             colorRed = Content.Load<Texture2D>("spr_can_red");
