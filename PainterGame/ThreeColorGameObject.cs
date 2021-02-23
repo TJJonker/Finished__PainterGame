@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace PainterGame
@@ -26,6 +27,21 @@ namespace PainterGame
                 spriteBounds.Offset(position - origin);
                 return spriteBounds;
             }
+        }
+
+        public ThreeColorGameObject(ContentManager Content, string redSprite, string greenSprite, string blueSprite)
+        {
+            colorRed = Content.Load<Texture2D>(redSprite);
+            colorGreen = Content.Load<Texture2D>(greenSprite);
+            colorBlue = Content.Load<Texture2D>(blueSprite);
+
+            origin = new Vector2(colorRed.Width, colorRed.Height)/2;
+
+            position = Vector2.Zero;
+            velocity = Vector2.Zero;
+            rotation = 0;
+
+            Reset();
         }
 
         public void Reset()
